@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<h3 class='text-center'>Your orders, {{ request.user }}</h3>
+<hr>
+
+<table class='table'>
+	 <tr style='background:lightblue;'>
+	 	<td class="text-center">Order Number</td>
+	 	<td class="text-center">Order Date</td>
+	 	<td class="text-center">Order State</td>
+	 	<td class="text-center">Order Price</td>
+	 	<td class="text-center">Order Details</td>
+	 	<td class="text-center"></td>
+	 </tr>
+	 {% for item in order %}
+	 <tr>
+	 	<td class="text-center" style='padding-top: 20px; padding-bottom: 10px;'>{{ item.id }}</td>
+	 	<td class="text-center" style='padding-top: 20px; padding-bottom: 10px;'>{{ item.date }}</td>
+	 	<td class="text-center" style='padding-top: 20px; padding-bottom: 10px;'>{{ item.status }}</td>
+	 	<td class="text-center" style='padding-top: 20px; padding-bottom: 10px;'>{{ item.total }}</td>
+	 	<td class="text-center" style='padding-top: 20px; padding-bottom: 10px;'></td>
+	 </tr>
+
+	 {% endfor %}
+</table>
+
+{% endblock content %}

@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+    <div class='col-sm-4'>
+        <img src='{{ product.image.url }}' style='width:90%'>
+    </div>
+    <div class='col-sm-8'>
+        <h3 class='text-center'>{{ product.title }}</h3>
+        <p>{% lorem %}</p>
+        <p>{% lorem %}</p>
+    <hr>
+        <p style='font-size: 25px'>Price: <strong>{{ product.price }}$</strong></p>
+        {% if request.user.is_authenticated %}<a href='#' class='add_to_cart' data-slug='{{ product.slug }}'><button class='btn btn-danger'>Add to cart</button></a>{% else %}<p class='text-center'>Only registered users can place the orders. Please, <a href='{% url "login" %}'>log in</a> or <a href='{% url "registration" %}'>register</a>.</p>{% endif %}
+    </div>
+    <script src='{% static "js/jquery.js" %}'></script>
+    <script>
+    $(document).ready(function(){
+        $('.add_to_cart').on('click', function(e){
+            e.preventDefault()
+            product_slug = $(this).attr('data-slug')
+            data = {
+                product_slug: product_slug  
+            }
+            $.ajax({
+                type: "GET",
+                url: '{% url "add_to_cart" %}',
+                data: data,
+                success: function(data){
+                    $("#cart_count").html(data.cart_total)
+                }
+            })
+        })
+    })
+    </script>
+{% endblock content %}
